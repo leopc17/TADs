@@ -36,7 +36,7 @@ public interface Stack<T> extends Iterable<T> {
      *
      * @return the number of elements in this stack.
      */
-    Integer size();
+    int size();
 
     /**
      * Tests if this stack is empty.
