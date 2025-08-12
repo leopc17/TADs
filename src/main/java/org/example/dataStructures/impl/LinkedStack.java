@@ -11,31 +11,48 @@ public class LinkedStack<T> implements Stack<T> {
 
     @Override
     public void push(T element) {
+        Node newNode = new Node(element);
+        if (top == null) {
+            top = newNode;
+        } else {
+            newNode.setNext(top);
+            top = newNode;
+        }
+        size++;
     }
 
     @Override
     public T pop() {
-        return null;
+        if (top == null) {
+            return null; // Stack vazia
+        }
+        T data = top.getData();
+        top = top.getNext();
+        size--;
+        return data;
     }
 
     @Override
     public T top() {
-        return null;
+        if (top == null) {
+            return null; // Stack vazia
+        }
+        return top.getData();
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        throw new UnsupportedOperationException("Iterator não implementado");
     }
 
     private class Node {
