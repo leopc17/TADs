@@ -1,5 +1,6 @@
 package org.example.dataStructures.impl;
 
+import org.example.dataStructures.exceptions.stack.EmptyStackException;
 import org.example.dataStructures.interfaces.Stack;
 
 import java.util.Iterator;
@@ -9,33 +10,49 @@ public class LinkedStack<T> implements Stack<T> {
     private Node top;
     private int size;
 
+    public LinkedStack() { // Inicia com nó sentinela
+        top = new Node(null);
+        size = 0;
+    }
+
     @Override
     public void push(T element) {
+        top = new Node(element, top); // Cria um novo nó com o elemento e aponta para o antigo topo
+        size++;
     }
 
     @Override
     public T pop() {
-        return null;
+        if (top.isNIL()) {
+            throw new EmptyStackException("Erro: a pilha está vazia.");
+        }
+        T data = top.getData();
+        top = top.getNext();
+        size--;
+        return data;
     }
 
     @Override
     public T top() {
-        return null;
+        if (top.isNIL()) {
+            throw new EmptyStackException("Erro: a pilha está vazia.");
+        }
+        return top.getData();
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        throw new UnsupportedOperationException("Iterator não implementado");
     }
 
     private class Node {
