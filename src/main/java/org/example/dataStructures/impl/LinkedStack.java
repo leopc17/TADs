@@ -1,5 +1,6 @@
 package org.example.dataStructures.impl;
 
+import org.example.dataStructures.exceptions.stack.EmptyStackException;
 import org.example.dataStructures.interfaces.Stack;
 
 import java.util.Iterator;
@@ -9,22 +10,21 @@ public class LinkedStack<T> implements Stack<T> {
     private Node top;
     private int size;
 
+    public LinkedStack() { // Inicia com nó sentinela
+        top = new Node(null);
+        size = 0;
+    }
+
     @Override
     public void push(T element) {
-        Node newNode = new Node(element);
-        if (top == null) {
-            top = newNode;
-        } else {
-            newNode.setNext(top);
-            top = newNode;
-        }
+        top = new Node(element, top); // Cria um novo nó com o elemento e aponta para o antigo topo
         size++;
     }
 
     @Override
     public T pop() {
-        if (top == null) {
-            return null; // Stack vazia
+        if (top.isNIL()) {
+            throw new EmptyStackException("Erro: a pilha está vazia.");
         }
         T data = top.getData();
         top = top.getNext();
@@ -34,8 +34,8 @@ public class LinkedStack<T> implements Stack<T> {
 
     @Override
     public T top() {
-        if (top == null) {
-            return null; // Stack vazia
+        if (top.isNIL()) {
+            throw new EmptyStackException("Erro: a pilha está vazia.");
         }
         return top.getData();
     }
